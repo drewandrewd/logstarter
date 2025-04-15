@@ -11,7 +11,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "logstarter")
 public class LogStarterProperties {
 
-
     private boolean enabled = true;
 
     private LogLevel level = LogLevel.INFO;
