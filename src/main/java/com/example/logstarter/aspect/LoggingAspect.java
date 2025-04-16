@@ -21,8 +21,6 @@ import java.util.Arrays;
  */
 @Slf4j
 @Aspect
-@Component
-@ConditionalOnProperty(prefix = "logstarter", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class LoggingAspect {
 
     private final LogStarterProperties props;
@@ -38,7 +36,8 @@ public class LoggingAspect {
      */
     @Before("@annotation(com.example.logstarter.annotation.LogExecution)")
     public void logBefore(JoinPoint joinPoint) {
-        log.info("Before method: {} with args {}", joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+        String message = "Before method: %s with args %s".formatted(joinPoint.getSignature().getName(), Arrays.toString(joinPoint.getArgs()));
+        logByLevel(message);
     }
 
     /**
@@ -50,7 +49,8 @@ public class LoggingAspect {
     @AfterReturning(pointcut = "@annotation(com.example.logstarter.annotation.LogExecution)",
             returning = "result")
     public void logAfterReturning(JoinPoint joinPoint, Object result) {
-        log.info("AfterReturning from method: {} with result: {}", joinPoint.getSignature().getName(), result);
+        String message = "AfterReturning from method: %s with result: %s".formatted(joinPoint.getSignature().getName(), result);
+        logByLevel(message);
     }
 
     /**
@@ -82,7 +82,8 @@ public class LoggingAspect {
         try {
             Object result = joinPoint.proceed();
             long elapsedTime = System.currentTimeMillis() - start;
-            log.info("Around method: {} executed in {} ms", joinPoint.getSignature().getName(), elapsedTime);
+            String message = "Around method: %s executed in %s ms".formatted(joinPoint.getSignature().getName(), elapsedTime);
+            logByLevel(message);
             return result;
         } catch (Throwable ex) {
             log.error("Exception in Around advice: {}", ex.getMessage());
