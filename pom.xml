@@ -29,7 +29,6 @@
     <properties>
         <java.version>17</java.version>
         <configuration-processor.version>3.4.4</configuration-processor.version>
-        <spring-aop.version>3.4.4</spring-aop.version>
         <lombock.version>1.18.36</lombock.version>
     </properties>
     <dependencies>
@@ -45,7 +44,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>${spring-aop.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
